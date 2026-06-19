@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Voto Popular — Concurso de Mini Andores</title>
+  <title>Voto Popular — Concurso de Andores</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -226,7 +226,7 @@
 
 <header>
   <p class="header-eyebrow">Arraial do Banho de São João · Corumbá 2026</p>
-  <h1>Concurso de Mini Andores<span>Voto Popular</span></h1>
+  <h1>Concurso de Andores<span>Voto Popular</span></h1>
   <p class="header-sub">Escolha seu favorito em cada categoria e registre seu voto</p>
 </header>
 <div class="fita"></div>
@@ -236,7 +236,7 @@
   <div class="fechado-box">
     <div class="fechado-icone">🕯️</div>
     <h2>A votação está encerrada no momento</h2>
-    <p>A votação popular do Concurso de Mini Andores acontece durante o período da exposição, no Porto de Corumbá.</p>
+    <p>A votação popular do Concurso de Andores acontece durante o período da exposição, no Porto de Corumbá.</p>
     <p class="horario">MENSAGEM_RETORNO</p>
   </div>
 </div>
@@ -325,7 +325,7 @@
 
 </div><!-- /conteudo-votacao -->
 
-<footer>Fundação de Cultura de Corumbá · Sistema de votação popular</footer>
+<footer>Fundação de Cultura de Corumbá · Concurso de Andores — Voto Popular</footer>
 
 <script>
   // ════════════════════════════════════════════════════════════
@@ -333,7 +333,7 @@
   // ════════════════════════════════════════════════════════════
 
   // URL gerada ao publicar o Apps Script como Web App
-  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby4WtvUtriLlyp5Q7ncloxgDwP5U_5kqG8cGP8ufqHzPnqi1sbGsKiUlQFy1RuD4cQM/exec";
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwPKq-sOa1vbl0Rw2U-VpWf11WKmZrTjVD120EX2i1e8S2KkY7RqW0V6E9f2Umml_MidQ/exec";
 
   // true  = votação aberta
   // false = votação fechada (exibe mensagem abaixo)
@@ -342,37 +342,49 @@
   // Mensagem exibida quando fechada — aparece em destaque
   const MENSAGEM_FECHADA = "Volte amanhã às 19h para votar.";
 
-  // Andores da categoria Tradicional
+  // Andores da categoria Tradicional (numerados 01–15)
   const ANDORES_TRADICIONAL = [
-    "Nome do Andor T1",
-    "Nome do Andor T2",
-    "Nome do Andor T3",
-    "Nome do Andor T4",
-    "Nome do Andor T5",
-    "Nome do Andor T6",
-    "Nome do Andor T7",
-    "Nome do Andor T8",
-    "Nome do Andor T9",
-    "Nome do Andor T10",
-    "Nome do Andor T11",
-    "Nome do Andor T12",
+    "São João Batista Nhá Berê",
+    "Andor da Tradição e Promessa",
+    "São João Batista Guardião da Nossa Fé",
+    "Andor da Festeira Tatiana Amorim - São João rogai por nós",
+    "Cai Cai Balão!",
+    "Fé e Esperança",
+    "Apresentação do Andor de São João Batista",
+    "Tributo a São João Batista",
+    "Fé, Amor, Tradição São João Batista",
+    "Andor Raízes da Tradição e Fé de São João Batista",
+    "Projeto Vó Chica, Amor e Fé! Viva a São João Batista!",
+    "Tradição em Homenagem a Maria Paula",
+    "Andor de Elaine Ortiz",
+    "São João Batista Milagroso!",
+    "Andor da Dona Luiza",
   ];
 
-  // Andores da categoria Pluralidade
+  // Identificadores exibidos nos cards do Tradicional (01, 02 … 15)
+  const IDS_TRADICIONAL = ["01","02","03","04","05","06","07","08","09","10","11","12","13","14","15"];
+
+  // Andores da categoria Pluralidade (letrados A–O)
   const ANDORES_PLURALIDADE = [
-    "Nome do Andor P1",
-    "Nome do Andor P2",
-    "Nome do Andor P3",
-    "Nome do Andor P4",
-    "Nome do Andor P5",
-    "Nome do Andor P6",
-    "Nome do Andor P7",
-    "Nome do Andor P8",
-    "Nome do Andor P9",
-    "Nome do Andor P10",
-    "Nome do Andor P11",
-    "Nome do Andor P12",
+    "Amor e Esperança",
+    "São João no Mar de Xaraés",
+    "Nhô Zamo",
+    "São João Batista batizando Jesus",
+    "São João Batista: o brasileirinho do Pantanal",
+    "Devoção e São João",
+    "Entre o Fogo e as Águas: meu recomeço",
+    "Passos de Alegria - Run4life no ritmo de São João",
+    "São João Batista: um clamor da fé, sustentabilidade e preservação do pantanal",
+    "O Batismo das Águas Pantaneiras",
+    "Shá Onça",
+    "Ibejada nas Águas de São João",
+    "São João vai à Copa 2026",
+    "Amor e Devoção - Viva São João!",
+    "Andor em Salsaparrilla",
   ];
+
+  // Identificadores exibidos nos cards do Pluralidade (letras A–O)
+  const IDS_PLURALIDADE = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O"];
 
   // ════════════════════════════════════════════════════════════
 
@@ -386,21 +398,21 @@
 
   let selecionado = { tradicional: null, pluralidade: null };
 
-  function renderizarGrid(containerId, lista, categoria) {
+  function renderizarGrid(containerId, lista, categoria, identificadores) {
     const grid = document.getElementById(containerId);
     lista.forEach((nome, i) => {
-      const num = i + 1;
+      const id = identificadores[i];
       const card = document.createElement('div');
       card.className = 'andor-card';
       card.dataset.cat = categoria;
-      card.innerHTML = `<div class="andor-numero">${num}</div><div class="andor-nome">${nome}</div>`;
-      card.addEventListener('click', () => selecionarAndor(card, num, nome, categoria));
+      card.innerHTML = `<div class="andor-numero">${id}</div><div class="andor-nome">${nome}</div>`;
+      card.addEventListener('click', () => selecionarAndor(card, id, nome, categoria));
       grid.appendChild(card);
     });
   }
 
-  renderizarGrid('gridTradicional', ANDORES_TRADICIONAL, 'tradicional');
-  renderizarGrid('gridPluralidade', ANDORES_PLURALIDADE, 'pluralidade');
+  renderizarGrid('gridTradicional', ANDORES_TRADICIONAL, 'tradicional', IDS_TRADICIONAL);
+  renderizarGrid('gridPluralidade', ANDORES_PLURALIDADE, 'pluralidade', IDS_PLURALIDADE);
 
   function selecionarAndor(card, num, nome, categoria) {
     // desmarca outros da mesma categoria
@@ -548,3 +560,4 @@
 </script>
 </body>
 </html>
+
