@@ -161,6 +161,17 @@
     .andor-card.selecionado::after { content: '✓'; position: absolute; top: 6px; right: 8px; font-size: 0.85rem; font-weight: 700; }
     .andor-card.selecionado[data-cat="tradicional"]::after { color: var(--tradicional); }
     .andor-card.selecionado[data-cat="pluralidade"]::after { color: var(--pluralidade); }
+    .andor-badge-id {
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      padding: 0.12rem 0.55rem;
+      border-radius: 10px;
+      margin-bottom: 0.4rem;
+      display: inline-block;
+    }
+    .andor-card[data-cat="tradicional"] .andor-badge-id { background: #F5EBD8; color: var(--tradicional); border: 1px solid #D4B896; }
+    .andor-card[data-cat="pluralidade"] .andor-badge-id { background: #D8E8F5; color: var(--pluralidade); border: 1px solid #96B8D4; }
     .andor-numero { font-family: 'Playfair Display', serif; font-size: 0.82rem; font-weight: 700; color: #9A7D5A; line-height: 1.25; margin-bottom: 0.3rem; transition: color 0.15s; }
     .andor-card.selecionado[data-cat="tradicional"] .andor-numero { color: var(--tradicional); }
     .andor-card.selecionado[data-cat="pluralidade"] .andor-numero { color: var(--pluralidade); }
@@ -341,12 +352,12 @@
   // Mensagem exibida quando fechada — aparece em destaque
   const MENSAGEM_FECHADA = "Volte amanhã às 19h para votar.";
 
-  // Andores da categoria Tradicional (numerados 01–15)
+  // Andores da categoria Tradicional (numerados 01–16)
   const ANDORES_TRADICIONAL = [
     "São João Batista Nhá Berê",
     "Andor da Tradição e Promessa",
     "São João Batista Guardião da Nossa Fé",
-    "Andor da Festeira Tatiana Amorim - São João rogai por nós",
+    "São João Rogai Por Nós",
     "Cai Cai Balão!",
     "Fé e Esperança",
     "Apresentação do Andor de São João Batista",
@@ -355,13 +366,17 @@
     "Andor Raízes da Tradição e Fé de São João Batista",
     "Projeto Vó Chica, Amor e Fé! Viva a São João Batista!",
     "Tradição em Homenagem a Maria Paula",
-    "Andor de Elaine Ortiz",
+    "Fé, devoção e gratidão às graças alcançadas",
     "São João Batista Milagroso!",
     "Andor da Dona Luiza",
+    "Andor do Lions Clube Corumbá",
   ];
 
+  // Números oficiais exibidos na plaquinha física (badge no card)
+  const NUMS_TRADICIONAL = ["01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16"];
+
   // Identificadores exibidos nos cards do Tradicional (01, 02 … 15)
-  const IDS_TRADICIONAL = ["Paulo Paes Vera","Maria Rosária Diaz (Marly Diaz)","Carlos Henrique Diaz","Willian de Souza Batista","Dilza Maria Franco Bruno","Nilza Hellensberg","Jorge Luis Marques Ferreira","Edilson Pinto Oliveira","Joelton Ibrahim de Almeida","Oraide Teodora Ramos","Cleyton Araujo de Oliveira","Rosana Lidia da Silva Pereira","Elaine Ortiz","Roque Herrera Moreno (Allan)","Rita de Cassia Andrade Rodrigues (Maria Luiza)"];
+  const IDS_TRADICIONAL = ["Paulo Paes Vera","Maria Rosária Diaz (Marly Diaz)","Carlos Henrique Diaz","Tati Amorim e Aira Aparecida Rodrigues","Dilza Maria Franco Bruno","Nilza Hellensberg","Jorge Luis Marques Ferreira","Edilson Pinto Oliveira","Joelton Ibrahim de Almeida","Oraide Teodora Ramos","Cleyton Araujo de Oliveira","Rosana Lidia da Silva Pereira","Elaine Ortiz","Roque Herrera Moreno (Allan)","Rita de Cassia Andrade Rodrigues (Maria Luiza)","Luiz Ricardo Julião Rocha"];
 
   // Andores da categoria Pluralidade (letrados A–O)
   const ANDORES_PLURALIDADE = [
@@ -385,6 +400,9 @@
   // Identificadores exibidos nos cards do Pluralidade (letras A–O)
   const IDS_PLURALIDADE = ["Pedro Celso Sampaio","Maria do Carmo Gonçalves Goes Mendonça","Hellen Karine Nunes de Oliveira","Elizangela Pinto De Oliveira","Nely Fernandes Severina","Mario Ramão Benevides","Thayná Cambará Beraldo","Esther Andrea da Silva (Run4life)","Diego Rodrigues da Silva","Kayan Caballeo Ferreira","Bianca Maria Machado de Oliveira","Elenir Batista Rachid","Marilza Silva Gonçalves","Andreia de Souza","Davi Ferreira Nazário"];
 
+  // Letras oficiais exibidas na plaquinha física (badge no card)
+  const NUMS_PLURALIDADE = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O"];
+
   // ════════════════════════════════════════════════════════════
 
   // Controla exibição por estado da votação
@@ -397,21 +415,22 @@
 
   let selecionado = { tradicional: null, pluralidade: null };
 
-  function renderizarGrid(containerId, lista, categoria, identificadores) {
+  function renderizarGrid(containerId, lista, categoria, identificadores, numeros) {
     const grid = document.getElementById(containerId);
     lista.forEach((nome, i) => {
       const id = identificadores[i];
+      const numero = numeros[i];
       const card = document.createElement('div');
       card.className = 'andor-card';
       card.dataset.cat = categoria;
-      card.innerHTML = `<div class="andor-numero">${nome}</div><div class="andor-nome">${id}</div>`;
+      card.innerHTML = `<div class="andor-badge-id">${numero}</div><div class="andor-numero">${nome}</div><div class="andor-nome">${id}</div>`;
       card.addEventListener('click', () => selecionarAndor(card, id, nome, categoria));
       grid.appendChild(card);
     });
   }
 
-  renderizarGrid('gridTradicional', ANDORES_TRADICIONAL, 'tradicional', IDS_TRADICIONAL);
-  renderizarGrid('gridPluralidade', ANDORES_PLURALIDADE, 'pluralidade', IDS_PLURALIDADE);
+  renderizarGrid('gridTradicional', ANDORES_TRADICIONAL, 'tradicional', IDS_TRADICIONAL, NUMS_TRADICIONAL);
+  renderizarGrid('gridPluralidade', ANDORES_PLURALIDADE, 'pluralidade', IDS_PLURALIDADE, NUMS_PLURALIDADE);
 
   function selecionarAndor(card, num, nome, categoria) {
     // desmarca outros da mesma categoria
